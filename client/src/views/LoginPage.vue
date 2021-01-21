@@ -93,6 +93,7 @@ export default {
     }
   },
   methods: {
+    // Login method handler 
    logIn(){
      if(this.user.login === '' || this.user.password === ''){
        this.$refs.loginForm.validate();
@@ -116,6 +117,7 @@ export default {
     }
   }
 
+// Error modal window styles overriding 
   .v-dialog{
     position: absolute!important;
     top: 2rem!important

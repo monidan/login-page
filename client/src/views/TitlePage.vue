@@ -20,6 +20,3 @@ export default {
   name: 'TitlePage'
 }
 </script>
-<style lang="scss">
-  
-</style>

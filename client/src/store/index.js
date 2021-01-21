@@ -16,6 +16,7 @@ const store = new Vuex.Store({
     isAuthError: false
   },
   mutations: {
+    // Mutation to auth user entry. 
     authenticateUser(state, userEntry){
       for(let i = 0; i < state.users.length; i++){
         if(state.users[i].login === userEntry.login && state.users[i].password === userEntry.password){
@@ -29,6 +30,19 @@ const store = new Vuex.Store({
     }
   },
   actions: {
+    /*
+      Here we're downloading our users database (what I wouldn't normally do in production).
+      It can be improved and be more secured. 
+
+      But because of a lack of time I decided to go this way. 
+      Normally I would do 'POST' request on the server with our 'user' Object.
+      Then get response from the server is user data input is correct, so accepct auth
+      and give permission to entry.
+
+      There're also can be some improvmnents in our project structure, such as:
+      - create seperate file for our axios calls
+      - save some kind of token in the localStorage, so we will be able to know if user has already logged in.
+    */
     async requestPermission({commit, state}, userAuth){
       await axios.get(state.serverURL + '/api/user')
         .then(response => {
