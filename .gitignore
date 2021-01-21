@@ -1,0 +1,17 @@
+# server files
+server/Thumbs.db
+server/.DS_Store
+server/.gradle
+server/build/
+server/out/
+server/.idea
+server/*.iml
+server/*.ipr
+server/*.iws
+server/.project
+server/.settings
+server/.classpath
+
+# client files
+
+client/node_modules/*

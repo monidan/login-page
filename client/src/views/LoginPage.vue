@@ -1,6 +1,15 @@
 <template>
   <div id='login'>
-    <v-form>
+    <v-dialog
+      v-model="$store.state.isAuthError"
+      transition='dialog-top-transition'
+      width='500'
+    >
+      <div class="modal-text pa-12 text-h4 red darken-4">
+        Error!
+      </div>
+    </v-dialog>
+    <v-form ref="loginForm">
       <v-row
         justify='center'
       >
@@ -41,6 +50,7 @@
             v-model="user.password"
             hint='Do not tell anybody your password!'
             prepend-inner-icon='mdi-lock'
+            type='password'
           >
           </v-text-field>
         </v-col>
@@ -68,8 +78,6 @@
   </div>
 </template>
 <script>
-import axios from 'axios'
-
 export default {
   name: 'LoginPage',
   data() {
@@ -82,29 +90,17 @@ export default {
       rules: {
         required: value => !!value || 'This field is required.'
       },
-      serverURL: process.env.VUE_APP_SERVER_URL
     }
   },
   methods: {
    logIn(){
-      let userXML = `<?xml version="1.0" encoding="UTF-8"?><user><login>${this.user.login}</login><password>${this.user.password}</password></user>`
-
-      axios.post(this.serverURL + '/api/auth', 
-        userXML, 
-        {
-          headers: {'Content-Type': 'text/xml'}
-        })
-          .then(response => {
-            // eslint-disable-next-line
-            console.log(response.data)
-          })
-          // eslint-disable-next-line
-          .catch(err => console.log(err))
-
-      // axios.get(this.serverURL + '/api/user')
-      // // eslint-disable-next-line
-      //   .then(response => console.log(response.data))
-    },
+     if(this.user.login === '' || this.user.password === ''){
+       this.$refs.loginForm.validate();
+       this.$store.state.isAuthError = true
+     } else {
+       this.$store.dispatch('requestPermission', this.user)
+     }
+    },  
   }
 }
 </script>
@@ -118,5 +114,15 @@ export default {
         margin: 0;
       }
     }
+  }
+
+  .v-dialog{
+    position: absolute!important;
+    top: 2rem!important
+  }
+
+  .modal-text{
+    display: inline-block!important;
+    text-align: center;
   }
 </style>
