@@ -25,3 +25,7 @@ password: `admin`
 
 login: `pasha2013`
 password: `kvastaras19`
+
+# Endpoints
+
+`http://localhost8080/api/user`
